@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Ensures the page is mobile-friendly and scales correctly on different devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>HelloNB - understand their slang</title>
+    <style>
+      /* --- Basic Reset & Global Styles --- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        color: #333;
+        background: #fafafa;
+        line-height: 1.5;
+      }
+
+      /* --- Container for content to center it nicely --- */
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+      }
+
+      /* --- Headings --- */
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #444;
+      }
+
+      /* --- Form Styles --- */
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      label {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      textarea {
+        width: 100%;
+        min-height: 60px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        resize: vertical;
+      }
+
+      /* --- Button Styles --- */
+      button {
+        align-self: flex-start;
+        padding: 10px 20px;
+        font-size: 1rem;
+        background: #0066cc;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      button:hover {
+        background: #0052a2;
+      }
+
+      /* --- Loading Indicator Styles --- */
+      .loading-indicator {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        font-size: 0.95rem;
+        color: #777;
+      }
+      .loading-indicator.active {
+        display: flex;
+      }
+      .spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ccc;
+        border-top: 2px solid #888;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* --- Response Container --- */
+      .response-container {
+        margin-top: 20px;
+        padding: 16px;
+        background: #f9f9f9;
+        border-radius: 4px;
+        display: none; /* Hidden by default until we have data */
+      }
+      .response-container.active {
+        display: block;
+      }
+      .response-heading {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      #explanation {
+        white-space: pre-wrap; /* Preserve line breaks */
+      }
+
+      /* --- Media Queries for Mobile --- */
+      @media (max-width: 640px) {
+        .container {
+          margin: 20px;
+          padding: 16px;
+        }
+        h1 {
+          font-size: 1.4rem;
+        }
+        button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Main container -->
+    <div class="container">
+      <h1>HelloNB - understand their slang</h1>
+
+      <!-- Form -->
+      <form id="interpretForm">
+        <div>
+          <label for="comment">Chinese Comment</label>
+          <textarea
+            id="comment"
+            name="comment"
+            placeholder="Enter the Chinese comment..."
+          ></textarea>
+        </div>
+        <div>
+          <label for="context">Context (Optional)</label>
+          <textarea
+            id="context"
+            name="context"
+            placeholder="Enter any context that might help interpretation..."
+          ></textarea>
+        </div>
+        <button type="submit">Interpret</button>
+
+        <!-- Loading Indicator -->
+        <div class="loading-indicator" id="loadingIndicator">
+          <div class="spinner"></div>
+          <span>Interpreting comment...</span>
+        </div>
+      </form>
+
+      <!-- Response -->
+      <div class="response-container" id="responseContainer">
+        <div class="response-heading">Interpretation / Explanation:</div>
+        <div id="explanation"></div>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("interpretForm");
+      const responseContainer = document.getElementById("responseContainer");
+      const explanationDiv = document.getElementById("explanation");
+      const loadingIndicator = document.getElementById("loadingIndicator");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Get user input
+        const comment = document.getElementById("comment").value.trim();
+        const context = document.getElementById("context").value.trim();
+
+        // Simple validation
+        if (!comment) {
+          alert("Please enter a Chinese comment first!");
+          return;
+        }
+
+        // Clear previous explanation & hide the response
+        explanationDiv.textContent = "";
+        responseContainer.classList.remove("active");
+
+        // Show loading indicator
+        loadingIndicator.classList.add("active");
+
+        // Prepare the request body
+        const requestBody = {
+          comment: comment,
+          context: context,
+        };
+
+        // Update this URL to match your deployed API endpoint
+        // e.g.: "https://your-cloud-run-url/interpret"
+        const apiUrl = "http://localhost:8000/interpret";
+
+        try {
+          const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          });
+
+          if (!response.ok) {
+            throw new Error(
+              `Server error: ${response.status} - ${response.statusText}`
+            );
+          }
+
+          const data = await response.json();
+
+          // data.explanation should contain the translation/interpretation
+          explanationDiv.textContent = data.explanation;
+          responseContainer.classList.add("active");
+        } catch (error) {
+          console.error(error);
+          explanationDiv.textContent = "An error occurred: " + error.message;
+          responseContainer.classList.add("active");
+        } finally {
+          // Hide loading indicator
+          loadingIndicator.classList.remove("active");
+        }
+      });
+    </script>
+  </body>
+</html>
