@@ -5,3 +5,15 @@ a tool to help English speakers interpret social media comments (hidden slang) i
 #### rate-limiter
 
 #### detect fraud - 5 requests per miniute
+
+#### Build the docker image
+
+```bash
+docker build -t hellonb:latest .
+```
+
+#### Run the docker container
+
+```bash
+docker run -p 8000:8000 hellonb
+```
