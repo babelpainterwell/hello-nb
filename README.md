@@ -15,5 +15,5 @@ docker build -t hellonb:latest .
 #### Run the docker container
 
 ```bash
-docker run -p 8000:8000 hellonb
+docker run -e PORT=8000 -p 8000:8000 hellonb
 ```

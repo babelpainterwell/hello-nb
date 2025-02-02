@@ -157,7 +157,11 @@
             placeholder="Enter any context that might help interpretation..."
           ></textarea>
         </div>
-        <button type="submit">Interpret</button>
+        <!-- Button Group -->
+        <div style="display: flex; gap: 10px">
+          <button type="submit">Interpret</button>
+          <button type="button" id="clearButton">Clear</button>
+        </div>
 
         <!-- Loading Indicator -->
         <div class="loading-indicator" id="loadingIndicator">
@@ -178,6 +182,7 @@
       const responseContainer = document.getElementById("responseContainer");
       const explanationDiv = document.getElementById("explanation");
       const loadingIndicator = document.getElementById("loadingIndicator");
+      const clearButton = document.getElementById("clearButton");
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -205,8 +210,7 @@
           context: context,
         };
 
-        // Update this URL to match your deployed API endpoint
-        // e.g.: "https://your-cloud-run-url/interpret"
+        // Update this URL to deployed API endpoint
         const apiUrl = "http://localhost:8000/interpret";
 
         try {
@@ -225,9 +229,7 @@
           }
 
           const data = await response.json();
-
-          // data.explanation should contain the translation/interpretation
-          explanationDiv.textContent = data.explanation;
+          explanationDiv.textContent = data.response;
           responseContainer.classList.add("active");
         } catch (error) {
           console.error(error);
@@ -237,6 +239,14 @@
           // Hide loading indicator
           loadingIndicator.classList.remove("active");
         }
+      });
+
+      // Clear button to empty both textareas and clear any displayed result
+      clearButton.addEventListener("click", () => {
+        document.getElementById("comment").value = "";
+        document.getElementById("context").value = "";
+        explanationDiv.textContent = "";
+        responseContainer.classList.remove("active");
       });
     </script>
   </body>

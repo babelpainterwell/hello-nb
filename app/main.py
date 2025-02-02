@@ -1,5 +1,8 @@
 from fastapi import FastAPI, HTTPException, Depends
-from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, model_validator
 import os
 import google.generativeai as genai 
 from dotenv import load_dotenv
@@ -18,6 +21,19 @@ logger = logging.getLogger(__name__)
 
 # Create FastAPI instance
 app = FastAPI()
+
+# Mount static files
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+
+# Add CORS middleware to allow requests from the same origin
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow requests from any origin 
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Configure Generative AI
 def configure_genai():
@@ -41,6 +57,7 @@ def configure_genai():
         "Focus on only important nuances, slang, or cultural references. "
         "If the comment input is in Chinese, please provide the English translation first. "
         "Please provide a clear explanation and try to be brief and concise."
+        "It's ok if there is no slang or cultural nuances in the comment, then just provide the English translation."
     )
     
     model = genai.GenerativeModel(
@@ -60,22 +77,30 @@ class CommentRequest(BaseModel):
     comment: str
     context: str | None = None
 
-    @classmethod
-    def validate(cls, values):
+    @model_validator(mode="before")
+    def validate_inputs(cls, values):
+        comment = values.get("comment", "").strip()
+        context = values.get("context", "")
 
         # Check if comment is empty
-        if not values["comment"].strip():
+        if not comment:
             raise ValueError("Comment cannot be empty.")
 
-        # check if comment is too long
-        if len(values["comment"]) > 2000:
+        # Check if comment is too long
+        if len(comment) > 2000:
             raise ValueError("Comment is too long. Please keep it under 2000 characters.")
 
-        # check if context is too long
-        if values["context"] and len(values["context"]) > 2000:
+        # Check if context is too long
+        if context and len(context) > 2000:
             raise ValueError("Context is too long. Please keep it under 2000 characters.")
 
         return values
+
+# Serve the index.html for the root URL
+@app.get("/", response_class=HTMLResponse)
+def read_root():
+    with open("app/static/index.html") as f:
+        return f.read()
 
 @app.get("/health")
 def health_check():
