@@ -217,7 +217,13 @@
 
         const requestBody = { comment: comment, context: context };
 
-        const apiUrl = "http://localhost:8000/interpret";
+        // Dynamically set the API URL based on environment
+        const isLocal =
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1";
+        const apiUrl = isLocal
+          ? "http://127.0.0.1:8080/interpret"
+          : "https://hellonb.us/interpret";
 
         try {
           const response = await fetch(apiUrl, {

@@ -2,6 +2,8 @@
 
 a tool to help English speakers interpret social media comments (hidden slang) in Chinese using LLM.
 
+Google Translate or built-in translation features only translate words, but slang often carries hidden meanings. Want to truly understand what’s being said and enjoy a more engaging, entertaining experience on RedNote? Try HelloNB! Link to the app: https://hellonb.com/
+
 #### Build the docker image
 
 ```bash
@@ -11,7 +13,7 @@ docker build -t hellonb:latest .
 #### Run the docker container
 
 ```bash
-docker run -e PORT=8080 -p 8000:8080 hellonb
+docker run -e PORT=8080 -p 8080:8080 hellonb
 ```
 
 To run the container in Google Cloud Run,
@@ -36,11 +38,19 @@ gcloud auth configure-docker us-east1-docker.pkg.dev
 #### Tag the docker image
 
 ```bash
-docker tag hellonb:latest-cloud us-east1-docker.pkg.dev/hellonb-448704/hellonb-first-docker-repo/hellonb:latest-cloud
+docker tag hellonb:latest-cloud us-east1-docker.pkg.dev/deductive-tempo-450104-t0/hellonb-second/hellonb:latest-cloud
 ```
 
 #### Push the docker image to the Google Artifact Registry
 
 ```bash
-docker push us-east1-docker.pkg.dev/hellonb-448704/hellonb-first-docker-repo/hellonb:latest-cloud
+docker push us-east1-docker.pkg.dev/deductive-tempo-450104-t0/hellonb-second/hellonb:latest-cloud
+```
+
+#### For AWS ECR Deployment
+
+```bash
+docker build --platform=linux/amd64 -t hellonb:latest-aws .
+docker tag hellonb:latest-aws 851725289587.dkr.ecr.us-east-1.amazonaws.com/hellonb-repo:latest
+docker push 851725289587.dkr.ecr.us-east-1.amazonaws.com/hellonb-repo:latest
 ```
