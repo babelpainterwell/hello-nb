@@ -50,6 +50,8 @@ docker push us-east1-docker.pkg.dev/deductive-tempo-450104-t0/hellonb-second/hel
 #### For AWS ECR Deployment
 
 ```bash
+aws ecr get-login-password --region us-east-1 \
+  | docker login --username AWS --password-stdin 851725289587.dkr.ecr.us-east-1.amazonaws.com
 docker build --platform=linux/amd64 -t hellonb:latest-aws .
 docker tag hellonb:latest-aws 851725289587.dkr.ecr.us-east-1.amazonaws.com/hellonb-repo:latest
 docker push 851725289587.dkr.ecr.us-east-1.amazonaws.com/hellonb-repo:latest
