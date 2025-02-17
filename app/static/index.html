@@ -4,103 +4,118 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HelloNB - The Meaning Uncovered</title>
-    <!-- Bootstrap CSS -->
     <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
     <style>
-      /* Global Reset */
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #f0f4f8, #d9e4f5);
-        color: #333;
-        padding: 0;
-        margin: 0;
-        min-height: 100vh;
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f5f5;
+        color: #202124;
         display: flex;
         justify-content: center;
         align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px; /* Add some padding */
       }
 
       .container {
-        max-width: 800px;
+        max-width: 700px; /* Slightly narrower container */
+        width: 100%; /* Make it responsive */
         padding: 40px;
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
       }
 
       h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
         text-align: center;
-        color: #2b2b2b;
+        color: #4285f4; /* Google Blue */
         font-weight: 500;
         margin-bottom: 30px;
       }
 
       label {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 400;
-        color: #555;
+        color: #5f6368;
+        margin-bottom: 0.5rem;
+        display: block; /* Labels on their own line */
       }
 
       textarea {
         width: 100%;
         min-height: 100px;
-        padding: 14px;
+        padding: 12px;
         font-size: 1rem;
-        border: 1px solid #ced4da;
-        border-radius: 6px;
-        background: #f9f9f9;
+        border: 1px solid #dddfe2;
+        border-radius: 4px;
+        background-color: #fff;
         resize: vertical;
         outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        margin-bottom: 1rem;
+        box-sizing: border-box; /* Include padding and border in width */
       }
 
       textarea:focus {
-        border-color: #80bdff;
-        box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+        border-color: #4285f4;
+        box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.25);
       }
 
       .button-group {
         display: flex;
-        gap: 15px;
+        gap: 10px;
         justify-content: center;
+        margin-top: 20px;
       }
 
-      button {
-        padding: 12px 24px;
-        font-size: 1rem;
-        border: none;
-        border-radius: 6px;
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 4px;
         cursor: pointer;
-        transition: background 0.3s ease;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        text-transform: uppercase; /* Uppercase button text */
+        letter-spacing: 0.02em; /* Slight letter spacing */
+        line-height: 1;
       }
 
-      button[type="submit"] {
-        background: #007bff;
-        color: white;
+      .btn-primary {
+        background-color: #4285f4;
+        color: #fff;
+        border: 1px solid #4285f4;
       }
 
-      button[type="submit"]:hover {
-        background: #0056b3;
+      .btn-primary:hover {
+        background-color: #3367d6;
+        border-color: #3367d6;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
       }
 
-      button[type="button"] {
-        background: #e0e0e0;
-        color: #333;
+      .btn-secondary {
+        background-color: transparent;
+        color: #5f6368;
+        border: 1px solid #dddfe2;
       }
 
-      button[type="button"]:hover {
-        background: #cccccc;
+      .btn-secondary:hover {
+        background-color: #f8f9fa;
+        border-color: #dadce0;
       }
 
       .loading-indicator {
         display: none;
         align-items: center;
+        justify-content: center;
         gap: 10px;
         font-size: 1rem;
-        color: #555;
+        color: #4285f4;
+        margin-top: 20px;
       }
 
       .loading-indicator.active {
@@ -108,12 +123,13 @@
       }
 
       .spinner {
+        /* Custom spinner */
         width: 20px;
         height: 20px;
-        border: 3px solid #ccc;
-        border-top: 3px solid #007bff;
+        border: 3px solid #dddfe2;
+        border-top: 3px solid #4285f4;
         border-radius: 50%;
-        animation: spin 1s linear infinite;
+        animation: spin 0.8s linear infinite;
       }
 
       @keyframes spin {
@@ -124,11 +140,12 @@
 
       .response-container {
         display: none;
-        background: #f8f9fa;
-        padding: 25px;
-        border-radius: 6px;
-        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
-        margin-top: 20px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        margin-top: 30px;
+        overflow-wrap: break-word;
       }
 
       .response-container.active {
@@ -136,16 +153,17 @@
       }
 
       .response-heading {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #333;
+        font-size: 1.125rem;
+        font-weight: 500;
+        margin-bottom: 15px;
+        color: #4285f4;
       }
 
       #explanation {
         white-space: pre-wrap;
         font-size: 1rem;
-        color: #444;
+        color: #202124;
+        line-height: 1.5;
       }
     </style>
   </head>
@@ -157,7 +175,6 @@
         <div class="form-group">
           <label for="comment">Chinese Comment</label>
           <textarea
-            class="form-control"
             id="comment"
             name="comment"
             placeholder="Enter the Chinese comment..."
@@ -167,7 +184,6 @@
         <div class="form-group">
           <label for="context">Context (Optional)</label>
           <textarea
-            class="form-control"
             id="context"
             name="context"
             placeholder="Enter any context that might help interpretation..."
@@ -183,7 +199,7 @@
 
         <div class="loading-indicator mt-3" id="loadingIndicator">
           <div class="spinner"></div>
-          <span>Interpreting comment...</span>
+          <span>Interpreting...</span>
         </div>
       </form>
 
