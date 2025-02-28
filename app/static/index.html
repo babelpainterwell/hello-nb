@@ -5,117 +5,215 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HelloNB - The Meaning Uncovered</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&family=Roboto:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
     <style>
+      :root {
+        --google-blue: #1a73e8;
+        --google-blue-hover: #1765cc;
+        --google-blue-focus: #d2e3fc;
+        --google-red: #ea4335;
+        --google-yellow: #fbbc05;
+        --google-green: #34a853;
+        --google-gray-50: #f8f9fa;
+        --google-gray-100: #f1f3f4;
+        --google-gray-200: #e8eaed;
+        --google-gray-300: #dadce0;
+        --google-gray-400: #bdc1c6;
+        --google-gray-500: #9aa0a6;
+        --google-gray-700: #5f6368;
+        --google-gray-900: #202124;
+        --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+          0 1px 3px 1px rgba(60, 64, 67, 0.15);
+        --shadow-md: 0 1px 3px 0 rgba(60, 64, 67, 0.3),
+          0 4px 8px 3px rgba(60, 64, 67, 0.15);
+      }
+
       body {
-        font-family: "Roboto", sans-serif;
-        background-color: #f5f5f5;
-        color: #202124;
+        font-family: "Google Sans Text", "Roboto", sans-serif;
+        background-color: var(--google-gray-100);
+        color: var(--google-gray-900);
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
         margin: 0;
-        padding: 20px; /* Add some padding */
+        padding: 20px;
+        line-height: 1.5;
+        font-size: 14px;
       }
 
       .container {
-        max-width: 700px; /* Slightly narrower container */
-        width: 100%; /* Make it responsive */
-        padding: 40px;
+        max-width: 640px;
+        width: 100%;
+        padding: 48px 36px;
         background-color: #fff;
         border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        box-shadow: 0 1px 3px rgba(60, 64, 67, 0.12),
+          0 2px 6px rgba(60, 64, 67, 0.08);
       }
 
       h1 {
-        font-size: 2.25rem;
+        font-family: "Google Sans", sans-serif;
+        font-size: 22px;
         text-align: center;
-        color: #4285f4; /* Google Blue */
+        color: var(--google-gray-900);
+        font-weight: 400;
+        margin-bottom: 24px;
+        letter-spacing: -0.25px;
+      }
+
+      .logo-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0px;
+        margin-bottom: 24px;
+      }
+
+      .logo-letter {
+        font-family: "Google Sans", sans-serif;
+        font-size: 28px;
         font-weight: 500;
-        margin-bottom: 30px;
+      }
+
+      .letter-h {
+        color: var(--google-blue);
+      }
+      .letter-e {
+        color: var(--google-red);
+      }
+      .letter-l1 {
+        color: var(--google-yellow);
+      }
+      .letter-l2 {
+        color: var(--google-blue);
+      }
+      .letter-o {
+        color: var(--google-green);
+      }
+      .letter-n {
+        color: var(--google-red);
+      }
+      .letter-b {
+        color: var(--google-yellow);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
       }
 
       label {
-        font-size: 1rem;
-        font-weight: 400;
-        color: #5f6368;
-        margin-bottom: 0.5rem;
-        display: block; /* Labels on their own line */
+        font-family: "Google Sans", "Roboto", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--google-gray-700);
+        margin-bottom: 8px;
+        display: block;
       }
 
       textarea {
         width: 100%;
-        min-height: 100px;
-        padding: 12px;
-        font-size: 1rem;
-        border: 1px solid #dddfe2;
+        min-height: 120px;
+        padding: 12px 16px;
+        font-size: 16px;
+        font-family: "Google Sans Text", "Roboto", sans-serif;
+        border: 1px solid var(--google-gray-300);
         border-radius: 4px;
         background-color: #fff;
         resize: vertical;
         outline: none;
-        transition: border-color 0.2s, box-shadow 0.2s;
-        margin-bottom: 1rem;
-        box-sizing: border-box; /* Include padding and border in width */
+        transition: all 0.15s ease;
+        margin-bottom: 4px;
+        box-sizing: border-box;
+        color: var(--google-gray-900);
+      }
+
+      textarea:hover {
+        border-color: var(--google-gray-400);
       }
 
       textarea:focus {
-        border-color: #4285f4;
-        box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.25);
+        border-color: var(--google-blue);
+        box-shadow: 0 0 0 2px var(--google-blue-focus);
       }
 
       .button-group {
         display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 20px;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 32px;
       }
 
       .btn {
-        padding: 10px 16px;
-        font-size: 0.875rem;
+        height: 36px;
+        font-family: "Google Sans", sans-serif;
+        font-size: 14px;
         font-weight: 500;
         border-radius: 4px;
         cursor: pointer;
-        transition: background-color 0.2s ease, box-shadow 0.2s ease;
-        text-transform: uppercase; /* Uppercase button text */
-        letter-spacing: 0.02em; /* Slight letter spacing */
-        line-height: 1;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        min-width: 80px;
+        border: none;
       }
 
       .btn-primary {
-        background-color: #4285f4;
+        background-color: var(--google-blue);
         color: #fff;
-        border: 1px solid #4285f4;
+        padding: 0 24px;
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+          0 1px 3px 1px rgba(60, 64, 67, 0.15);
       }
 
       .btn-primary:hover {
-        background-color: #3367d6;
-        border-color: #3367d6;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        background-color: var(--google-blue-hover);
+        box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3),
+          0 4px 8px 3px rgba(60, 64, 67, 0.15);
+      }
+
+      .btn-primary:focus {
+        box-shadow: 0 0 0 2px var(--google-blue-focus);
+        outline: none;
+      }
+
+      .btn-primary:active {
+        background-color: var(--google-blue-hover);
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3);
       }
 
       .btn-secondary {
         background-color: transparent;
-        color: #5f6368;
-        border: 1px solid #dddfe2;
+        color: var(--google-blue);
+        padding: 0 16px;
       }
 
       .btn-secondary:hover {
-        background-color: #f8f9fa;
-        border-color: #dadce0;
+        background-color: rgba(26, 115, 232, 0.04);
+      }
+
+      .btn-secondary:focus {
+        background-color: rgba(26, 115, 232, 0.12);
+        outline: none;
+      }
+
+      .btn-secondary:active {
+        background-color: rgba(26, 115, 232, 0.16);
       }
 
       .loading-indicator {
         display: none;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        font-size: 1rem;
-        color: #4285f4;
-        margin-top: 20px;
+        gap: 12px;
+        font-size: 14px;
+        color: var(--google-gray-700);
+        margin-top: 24px;
       }
 
       .loading-indicator.active {
@@ -123,13 +221,12 @@
       }
 
       .spinner {
-        /* Custom spinner */
         width: 20px;
         height: 20px;
-        border: 3px solid #dddfe2;
-        border-top: 3px solid #4285f4;
+        border: 2px solid rgba(26, 115, 232, 0.2);
+        border-top: 2px solid var(--google-blue);
         border-radius: 50%;
-        animation: spin 0.8s linear infinite;
+        animation: spin 1s linear infinite;
       }
 
       @keyframes spin {
@@ -141,10 +238,10 @@
       .response-container {
         display: none;
         background-color: #fff;
-        padding: 20px;
+        padding: 24px;
         border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        margin-top: 30px;
+        border: 1px solid var(--google-gray-200);
+        margin-top: 32px;
         overflow-wrap: break-word;
       }
 
@@ -153,22 +250,91 @@
       }
 
       .response-heading {
-        font-size: 1.125rem;
+        font-size: 16px;
+        font-family: "Google Sans", sans-serif;
         font-weight: 500;
-        margin-bottom: 15px;
-        color: #4285f4;
+        margin-bottom: 16px;
+        color: var(--google-gray-900);
       }
 
       #explanation {
         white-space: pre-wrap;
-        font-size: 1rem;
-        color: #202124;
-        line-height: 1.5;
+        font-size: 14px;
+        color: var(--google-gray-900);
+        line-height: 1.6;
+        font-family: "Google Sans Text", "Roboto", sans-serif;
+      }
+
+      /* Material Design 2.0 ripple effect */
+      .ripple {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ripple::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        background-image: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.7) 10%,
+          transparent 10.01%
+        );
+        background-repeat: no-repeat;
+        background-position: 50%;
+        transform: scale(10, 10);
+        opacity: 0;
+        transition: transform 0.5s, opacity 1s;
+      }
+
+      .ripple:active::after {
+        transform: scale(0, 0);
+        opacity: 0.3;
+        transition: 0s;
+      }
+
+      /* Focus outlines for accessibility */
+      *:focus-visible {
+        outline: 2px solid var(--google-blue);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 28px 20px;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        .button-group {
+          flex-direction: column-reverse;
+        }
+
+        .btn {
+          width: 100%;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="logo-text">
+        <span class="logo-letter letter-h">H</span>
+        <span class="logo-letter letter-e">e</span>
+        <span class="logo-letter letter-l1">l</span>
+        <span class="logo-letter letter-l2">l</span>
+        <span class="logo-letter letter-o">o</span>
+        <span class="logo-letter letter-n">N</span>
+        <span class="logo-letter letter-b">B</span>
+      </div>
+
       <h1>The Meaning Uncovered</h1>
 
       <form id="interpretForm">
@@ -191,19 +357,25 @@
         </div>
 
         <div class="button-group">
-          <button type="submit" class="btn btn-primary">Interpret</button>
-          <button type="button" id="clearButton" class="btn btn-secondary">
+          <button
+            type="button"
+            id="clearButton"
+            class="btn btn-secondary ripple"
+          >
             Clear
+          </button>
+          <button type="submit" class="btn btn-primary ripple">
+            Interpret
           </button>
         </div>
 
-        <div class="loading-indicator mt-3" id="loadingIndicator">
+        <div class="loading-indicator" id="loadingIndicator">
           <div class="spinner"></div>
           <span>Interpreting...</span>
         </div>
       </form>
 
-      <div class="response-container mt-4" id="responseContainer">
+      <div class="response-container" id="responseContainer">
         <div class="response-heading">Interpretation / Explanation:</div>
         <div id="explanation"></div>
       </div>
